@@ -51,8 +51,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:text> */
 #define DTS_IMX6_PINS_</xsl:text><xsl:value-of select="@InstanceAlias"/>
     <xsl:for-each select="key('instance', @InstanceAlias)">
-      <xsl:variable name="reg_mux" select="substring(Register[starts-with(@Name, 'IOMUXC_SW_MUX_')]/@Address, 8)"/>
-      <xsl:variable name="reg_pad" select="substring(Register[starts-with(@Name, 'IOMUXC_SW_PAD_')]/@Address, 8)"/>
+      <xsl:variable name="reg_mux" select="substring(Register[starts-with(@Name, 'IOMUXC_SW_MUX_CTL_PAD_')]/@Address, 8)"/>
+      <xsl:variable name="reg_pad" select="substring(Register[starts-with(@Name, 'IOMUXC_SW_PAD_CTL_PAD_')]/@Address, 8)"/>
       <xsl:variable name="reg_inp">
 	<xsl:variable name="tmp" select="substring(Register[substring(@Name, string-length(@Name) - 5) = '_INPUT']/@Address, 8)"/>
 	<xsl:choose>
@@ -66,8 +66,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			count(Register[starts-with(@Name, 'IOMUXC_SW_MUX_')]) = 1 and
 			count(Register[starts-with(@Name, 'IOMUXC_SW_PAD_')]) = 1 and
 			count(Register[substring(@Name, string-length(@Name) - 5) = '_INPUT']) &lt;= 1">
-	  <xsl:variable name="val_mux" select="Register[starts-with(@Name, 'IOMUXC_SW_MUX_')]/@Value"/>
-	  <xsl:variable name="val_pad" select="Register[starts-with(@Name, 'IOMUXC_SW_PAD_')]/@Value"/>
+	  <xsl:variable name="val_mux" select="Register[starts-with(@Name, 'IOMUXC_SW_MUX_CTL_PAD_')]/@Value"/>
+	  <xsl:variable name="val_pad" select="Register[starts-with(@Name, 'IOMUXC_SW_PAD_CTL_PAD_')]/@Value"/>
 	  <xsl:variable name="val_inp">
 	    <xsl:variable name="tmp" select="Register[substring(@Name, string-length(@Name) - 5) = '_INPUT']/@Value"/>
 	    <xsl:choose>
