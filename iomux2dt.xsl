@@ -63,8 +63,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       <xsl:choose>
 	<xsl:when test="string-length($reg_mux) > 0 and string-length($reg_pad) > 0 and
-			count(Register[starts-with(@Name, 'IOMUXC_SW_MUX_')]) = 1 and
-			count(Register[starts-with(@Name, 'IOMUXC_SW_PAD_')]) = 1 and
+			count(Register[starts-with(@Name, 'IOMUXC_SW_MUX_CTL_PAD_')]) = 1 and
+			count(Register[starts-with(@Name, 'IOMUXC_SW_PAD_CTL_PAD_')]) = 1 and
 			count(Register[substring(@Name, string-length(@Name) - 5) = '_INPUT']) &lt;= 1">
 	  <xsl:variable name="val_mux" select="Register[starts-with(@Name, 'IOMUXC_SW_MUX_CTL_PAD_')]/@Value"/>
 	  <xsl:variable name="val_pad" select="Register[starts-with(@Name, 'IOMUXC_SW_PAD_CTL_PAD_')]/@Value"/>
