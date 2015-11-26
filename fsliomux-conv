@@ -11,6 +11,7 @@ opt_outfile=
 opt_map=
 opt_postproc=
 opt_deps=
+opt_verbose=false
 
 t=`mktemp -t fsliomux.XXXXXX`
 t_err=`mktemp -t fsliomux-err.XXXXXX`
@@ -21,7 +22,7 @@ function panic() {
     exit 1
 }
 
-while getopts "F:m:O:D:o:M:P:d:" opt "$@"; do
+while getopts "F:m:O:D:o:M:P:d:v" opt "$@"; do
     case $opt in
       F)	opt_format=$OPTARG;;
       m)	opt_mode=$OPTARG;;
@@ -31,6 +32,7 @@ while getopts "F:m:O:D:o:M:P:d:" opt "$@"; do
       o)	opt_outfile=$OPTARG;;
       P)	opt_postproc=$OPTARG;;
       d)	opt_deps=$OPTARG;;
+      v)	opt_verbose=true;;
       --)	break;;
       ?)	exit 1;;
     esac
@@ -63,7 +65,11 @@ $XSLTPROC "${xsl_opts[@]}" "$xsl_file" "$@" 2>$t_err || {\
     panic "Failed to convert xml file"
 }
 
-grep -v '^xLoaded URL=' $t_err >&2 || :
+if $opt_verbose; then
+    cat $t_err
+else
+    grep -v '^Loaded URL=' $t_err || :
+fi >&2
 
 sed 's!Loaded URL="\(/[^"]\+\).*"!\1!' $t_err | while read f; do
     printf '\t%s \\\n' "$f" >>$opt_deps
