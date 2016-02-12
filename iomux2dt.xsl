@@ -28,10 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <xsl:variable name="_only"     select="concat('/', translate(normalize-space($only), ' ', '/ /'), '/')"/>
   <xsl:variable name="_disabled" select="concat('/', translate(normalize-space($disable), ' ', '/ /'), '/')"/>
 
-
-  <xsl:key name="instance" match="SignalDesign" use="@InstanceAlias"/>
-  <xsl:key name="address"  match="/PinMuxDesign/SignalDesign/Register" use="@Address"/>
-
+  <xsl:key name="instance" match="SignalDesign[@IsChecked = 'true']" use="@InstanceAlias"/>
+  <xsl:key name="address"  match="/PinMuxDesign/SignalDesign[@IsChecked = 'true']/Register" use="@Address"/>
 
   <xsl:template match="/PinMuxDesign">
     <xsl:text>#undef DTS_FOUND_INSTANCE
